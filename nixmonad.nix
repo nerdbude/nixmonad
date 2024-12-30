@@ -80,28 +80,28 @@
         myTerminal      = "alacritty"
         myTextEditor    = "nvim"
         myBorderWidth   = 2
-        windowCount     = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
+        -- windowCount     = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
         
         main = do
             -- Launching XMobar with config
-            xmproc0 <- spawnPipe "xmobar -x 0"
+            --xmproc0 <- spawnPipe "xmobar -x 0"
             --xmproc1 <- spawnPipe "xmobar -x 1" -- For XMobar on other Displays in Multi-Monitor Setup
             --xmproc2 <- spawnPipe "xmobar -x 2" --
         
-            xmonad $ ewmh desktopConfig
+             xmonad $ ewmh desktopConfig
                 { manageHook = ( isFullscreen --> doFullFloat ) <+> myManageHook <+> manageHook desktopConfig <+> manageDocks
-                , logHook = dynamicLogWithPP xmobarPP
-                                { ppOutput = \x -> hPutStrLn xmproc0 x -- >> hPutStrLn xmproc1 x  >> hPutStrLn xmproc2 x
-                                , ppCurrent = xmobarColor "#FF79C6" "" . wrap "" "" -- Current workspace in xmobar
-                                , ppVisible = xmobarColor "#44475A" ""                -- Visible but not current workspace
-                                , ppHidden = xmobarColor "#BD93F9" "" . wrap "" ""   -- Hidden workspaces in xmobar
-                                , ppHiddenNoWindows = xmobarColor "#6272A4" ""        -- Hidden workspaces (no windows)
-                                , ppTitle = xmobarColor "#8BE9FD" "" . wrap "[ " " ]" . shorten 80     -- Title of active window in xmobar
-                                , ppSep =  "<fc=#50FA7B> :: </fc>"                     -- Separators
-                                , ppUrgent = xmobarColor "#FF55555" "" . wrap "!" "!"  -- Urgent workspace
-                                , ppExtras  = [windowCount]                           -- # of windows current workspace
-                                , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
-                                }
+            --    , logHook = dynamicLogWithPP xmobarPP
+            --                   { ppOutput = \x -> hPutStrLn xmproc0 x -- >> hPutStrLn xmproc1 x  >> hPutStrLn xmproc2 x
+            --                    , ppCurrent = xmobarColor "#FF79C6" "" . wrap "" "" -- Current workspace in xmobar
+            --                    , ppVisible = xmobarColor "#44475A" ""                -- Visible but not current workspace
+            --                    , ppHidden = xmobarColor "#BD93F9" "" . wrap "" ""   -- Hidden workspaces in xmobar
+            --                    , ppHiddenNoWindows = xmobarColor "#6272A4" ""        -- Hidden workspaces (no windows)
+            --                    , ppTitle = xmobarColor "#8BE9FD" "" . wrap "[ " " ]" . shorten 80     -- Title of active window in xmobar
+            --                    , ppSep =  "<fc=#50FA7B> :: </fc>"                     -- Separators
+            --                    , ppUrgent = xmobarColor "#FF55555" "" . wrap "!" "!"  -- Urgent workspace
+            --                    , ppExtras  = [windowCount]                           -- # of windows current workspace
+            --                    , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
+            --                    }
                 , modMask            = myModMask
                 , terminal           = myTerminal
                 , startupHook        = myStartupHook
@@ -180,10 +180,6 @@
                 , ("M-S-;", sendMessage zoomReset)
                 , ("M-;", sendMessage ZoomFullToggle)
         
-            -- Scratchpads
-                , ("M-C-<Return>", namedScratchpadAction myScratchPads "terminal")
-                , ("M-C-c", namedScratchpadAction myScratchPads "cmus")
-        
             -- Open Terminal (Mod+Enter)
                 , ("M-<Return>", spawn myTerminal)
             --- Firefox
@@ -220,7 +216,9 @@
               , title =? "Vivaldi"         --> doShift "<action=xdotool key super+1>www</action>"
               , title =? "irssi"           --> doShift "<action=xdotool key super+9>irc</action>"
               , (className =? "Firefox" <&&> resource =? "Dialog") --> doFloat  -- Float Firefox Dialog
-            ] <+> namedScratchpadManageHook myScratchPads
+            ] 
+
+        --    <+> namedScratchpadManageHook myScratchPads
         
         ------------------------------------------------------------------------
         --- LAYOUTS
@@ -257,32 +255,6 @@
 	            , decoHeight			= 12 
         
         }
-        
-        ------------------------------------------------------------------------
-        ---SCRATCHPADS
-        ------------------------------------------------------------------------
-        --
-        -- myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
-        --                , NS "cmus" spawnCmus findCmus manageCmus
-        --               ]
-       -- 
-       --       where
-       --         spawnTerm  = myTerminal ++  " -n scratchpad"
-       --         findTerm   = resource =? "scratchpad"
-       --         manageTerm = customFloating $ W.RationalRect l t w h
-       --                 where
-       --                   h = 0.9
-       --                   w = 0.9
-       --                   t = 0.95 -h
-       --                   l = 0.95 -w
-       --             spawnCmus  = myTerminal ++  " -n cmus 'cmus'"
-       --             findCmus   = resource =? "cmus"
-       --             manageCmus = customFloating $ W.RationalRect l t w h
-       --                  where
-       --                     h = 0.9
-       --                     w = 0.9
-       --                     t = 0.95 -h
-       --                     l = 0.95 -w
       '';
       enableConfiguredRecompile = true;
     };
