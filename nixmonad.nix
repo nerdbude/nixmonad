@@ -108,8 +108,8 @@
                 , layoutHook         = myLayoutHook
                 , workspaces         = myWorkspaces
                 , borderWidth        = myBorderWidth
-                , normalBorderColor  = "#44475A"
-                , focusedBorderColor = "#BD93F9"
+                , normalBorderColor  = "#282A36"
+                , focusedBorderColor = "#282A36"
                 } `additionalKeysP`         myKeys
         
         ------------------------------------------------------------------------
@@ -183,7 +183,7 @@
             -- Open Terminal (Mod+Enter)
                 , ("M-<Return>", spawn myTerminal)
             --- Firefox
-                , ("M-f", spawn "firefox")
+                , ("M-f", spawn "librewolf")
         
             --- ROFI (Shift+Mod+Key)
                 , ("M-S-<Return>", spawn "rofi -show run")
@@ -242,16 +242,16 @@
         
         myTitleTheme :: Theme
         myTitleTheme = def {
-                fontName			= "Berkeley Mono Nerd Font:style=Regular"
-	            , inactiveBorderColor   = "#44475A"
-	            , inactiveColor		    = "#44475A"
-	            , inactiveTextColor	    = "#50FA7B"
-	            , activeBorderColor	    = "#BD93F9"
-	            , activeColor			= "#BD93F9"
-	            , activeTextColor		= "#44475A"
-	            , urgentBorderColor	    = "#50FA7B"
-	            , urgentTextColor		= "#44475A"
-	            , urgentColor			= "#50FA7B"
+                fontName			= "xft:Berkeley Mono Nerd Font:style=Regular:pixelsize=11"
+	            , inactiveBorderColor   = "#282A36"
+	            , inactiveColor		    = "#282A36"
+	            , inactiveTextColor	    = "#BD93F9"
+	            , activeBorderColor	    = "#282A36"
+	            , activeColor			= "#282A36"
+	            , activeTextColor		= "#50FA7B"
+	            , urgentBorderColor	    = "#FF4242"
+	            , urgentTextColor		= "#262626"
+	            , urgentColor			= "#FF4242"
 	            , decoHeight			= 12 
         
         }
